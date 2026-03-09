@@ -6,9 +6,9 @@ import type { DashboardTab } from "@/types/offer-transaction";
 
 const tabs: { value: DashboardTab; label: string }[] = [
   { value: "overview", label: "Overview" },
-  { value: "risk", label: "Risk" },
+  { value: "risk", label: "Risk Decisioning" },
   { value: "payments", label: "Payments" },
-  { value: "payloads", label: "Payloads" },
+  { value: "payloads", label: "Payload Log" },
 ];
 
 export function TabNavigation() {

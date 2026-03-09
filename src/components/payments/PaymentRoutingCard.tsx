@@ -1,41 +1,47 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import type { OfferTransaction } from "@/types/offer-transaction";
 
 interface PaymentRoutingCardProps {
-  transaction?: OfferTransaction;
+  transaction: OfferTransaction;
 }
 
 export function PaymentRoutingCard({ transaction }: PaymentRoutingCardProps) {
-  if (!transaction) {
-    return (
-      <Card>
-        <CardContent className="p-6 text-sm text-muted-foreground">
-          Select a transaction to view routing details
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base">Payment Routing</CardTitle>
+        <CardTitle className="text-base">Token & PSP Routing</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 text-sm">
+      <CardContent className="space-y-3 text-sm">
         <div className="flex justify-between">
-          <span className="text-muted-foreground">Method</span>
-          <span>{transaction.paymentMethod}</span>
+          <span className="text-muted-foreground">Token Vendor</span>
+          <span className="font-medium">{transaction.tokenVendor}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted-foreground">Processor</span>
-          <span>{transaction.vendor.name}</span>
+          <span className="text-muted-foreground">PSP</span>
+          <span className="font-medium">{transaction.pspName}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-muted-foreground">PSP Result</span>
+          <Badge variant={transaction.pspSuccess ? "default" : "destructive"}>
+            {transaction.pspSuccess ? "Success" : "Failed"}
+          </Badge>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-muted-foreground">Payment Method</span>
+          <span className="font-medium">
+            {transaction.paymentMethod.replace(/_/g, " ")}
+          </span>
         </div>
         <div className="flex justify-between">
           <span className="text-muted-foreground">Amount</span>
-          <span>
-            {transaction.currency} {transaction.amount.toFixed(2)}
+          <span className="font-medium">
+            {transaction.currency}{" "}
+            {transaction.amount.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+            })}
           </span>
         </div>
       </CardContent>

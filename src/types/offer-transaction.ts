@@ -30,12 +30,27 @@ export enum PaymentStepStatus {
   Skipped = "skipped",
 }
 
+export type RiskDecision = "approve" | "decline" | "review" | "pending";
+
+export type OrchestrationPhase = "pre_auth" | "post_auth" | "payment";
+
 export interface VendorInfo {
   id: string;
   name: string;
   code: string;
   riskScore: number;
   successRate: number;
+}
+
+export interface RiskVendorAssessment {
+  vendorName: string;
+  vendorCode: string;
+  decision: RiskDecision;
+  riskScore: number;
+  latencyMs: number;
+  phase: OrchestrationPhase;
+  rulesTriggered: string[];
+  matchDetails: Record<string, unknown>;
 }
 
 export interface RiskAssessment {
@@ -57,6 +72,16 @@ export interface PaymentStep {
   details: Record<string, unknown>;
 }
 
+export interface LifecycleStep {
+  name: "Authorization" | "Capture" | "Refund" | "Credit";
+  status: PaymentStepStatus;
+  amount: number | null;
+  responseCode: string | null;
+  message: string | null;
+  timestamp: string | null;
+  isPartial: boolean;
+}
+
 export interface PayloadEntry {
   id: string;
   timestamp: string;
@@ -66,18 +91,26 @@ export interface PayloadEntry {
   statusCode: number | null;
   headers: Record<string, string>;
   body: Record<string, unknown>;
+  vendor: string;
+  phase: OrchestrationPhase;
 }
 
 export interface OfferTransaction {
   offerId: string;
+  customerName: string;
   status: TransactionStatus;
   amount: number;
   currency: string;
   paymentMethod: PaymentMethod;
   vendor: VendorInfo;
   risk: RiskAssessment;
+  riskVendors: RiskVendorAssessment[];
   paymentSteps: PaymentStep[];
+  lifecycleSteps: LifecycleStep[];
   payloads: PayloadEntry[];
+  tokenVendor: string;
+  pspName: string;
+  pspSuccess: boolean;
   createdAt: string;
   updatedAt: string;
 }

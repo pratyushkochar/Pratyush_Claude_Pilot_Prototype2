@@ -126,6 +126,7 @@ function applyFilters(
 const fuseOptions: IFuseOptions<OfferTransaction> = {
   keys: [
     "offerId",
+    "customerName",
     "vendor.name",
     "vendor.code",
     "status",
