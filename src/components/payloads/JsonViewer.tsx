@@ -1,5 +1,7 @@
 "use client";
 
+import { JsonView, allExpanded, darkStyles } from "react-json-view-lite";
+import "react-json-view-lite/dist/index.css";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -19,9 +21,13 @@ export function JsonViewer({ title = "JSON Payload", data }: JsonViewerProps) {
           <p className="text-sm text-muted-foreground">No data to display</p>
         ) : (
           <ScrollArea className="h-[300px]">
-            <pre className="rounded-md bg-muted p-4 text-xs font-mono overflow-x-auto">
-              {JSON.stringify(data, null, 2)}
-            </pre>
+            <div className="rounded-md bg-muted p-4 text-xs">
+              <JsonView
+                data={data}
+                shouldExpandNode={allExpanded}
+                style={darkStyles}
+              />
+            </div>
           </ScrollArea>
         )}
       </CardContent>
