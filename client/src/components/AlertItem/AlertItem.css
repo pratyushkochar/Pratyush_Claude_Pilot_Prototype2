@@ -1,0 +1,35 @@
+.alert-item {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.alert-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.alert-item-category {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.alert-item-time {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-left: auto;
+}
+
+.alert-item-message {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.5;
+}
